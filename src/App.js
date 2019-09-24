@@ -13,14 +13,26 @@ class App extends Component {
     this.setState({ showPersons: !doesShow });
   };
 
+  deletePersonHandler = personIndex => {
+    const persons = this.state.persons;
+    persons.splice(personIndex, 1);
+    this.setState({ persons: persons });
+  };
+
   render() {
     let persons = null;
 
     if (this.state.showPersons) {
       persons = (
         <div>
-          {this.state.persons.map(person => {
-            return <Person name={person.name} age={person.age} />;
+          {this.state.persons.map((person, index) => {
+            return (
+              <Person
+                name={person.name}
+                age={person.age}
+                click={() => this.deletePersonHandler(index)}
+              />
+            );
           })}
         </div>
       );
@@ -31,7 +43,7 @@ class App extends Component {
         <header className="App-header">
           <h1 className="App-title">React app</h1>
         </header>
-        <button onClick={this.togglePersonsHandler}> Switch Name </button>
+        <button onClick={this.togglePersonsHandler}> Show Persons </button>
         {persons}
       </div>
     );
